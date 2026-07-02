@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstroSpeak — مربی زبان مینا</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --night: #0d0f1a;
+    --deep: #13172a;
+    --card: #1a1f35;
+    --border: rgba(120,140,255,0.15);
+    --accent: #7c9fff;
+    --gold: #f0c060;
+    --soft: #a8b4d8;
+    --text: #e8ecf8;
+    --muted: #6b7a9e;
+    --green: #4ecb8d;
+    --red: #e06b6b;
+    --amber: #f0a040;
+    --purple: #b09fff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--night);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 8% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 45% 38%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 82% 22%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 88%, rgba(255,255,255,0.4) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+  }
+
+  /* Header */
+  .header {
+    padding: 20px 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--text);
+    letter-spacing: 0.5px;
+  }
+
+  .streak-pill {
+    background: rgba(240,192,96,0.12);
+    border: 1px solid rgba(240,192,96,0.3);
+    color: var(--gold);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* Progress bar */
+  .progress-section {
+    padding: 16px 20px;
+    background: var(--deep);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  .week-badges {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .week-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .week-badge.active {
+    background: rgba(124,159,255,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .week-badge.done {
+    background: rgba(78,203,141,0.1);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  /* Nav tabs */
+  .nav {
+    display: flex;
+    background: var(--deep);
+    padding: 8px 12px;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .nav-btn.active {
+    background: rgba(124,159,255,0.15);
+    color: var(--accent);
+  }
+
+  /* Pages */
+  .page { display: none; padding: 20px; }
+  .page.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* Today section */
+  .today-hero {
+    background: linear-gradient(135deg, rgba(124,159,255,0.15), rgba(176,159,255,0.1));
+    border: 1px solid rgba(124,159,255,0.25);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .today-phase {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .today-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .today-sub {
+    font-size: 13px;
+    color: var(--soft);
+  }
+
+  /* Phrase card */
+  .phrase-of-day {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+
+  .phrase-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .phrase-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .phrase-persian {
+    font-size: 13px;
+    color: var(--soft);
+    margin-bottom: 12px;
+    direction: rtl;
+    text-align: right;
+    border-right: 2px solid var(--accent);
+    padding-right: 10px;
+  }
+
+  .phrase-context {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+
+  .phrase-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 9px 16px;
+    border-radius: 10px;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #fff;
+    flex: 1;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--soft);
+  }
+
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  /* Tasks */
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+  }
+
+  .task-item:last-child { border-bottom: none; }
+
+  .task-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .task-check.done {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .task-content { flex: 1; }
+
+  .task-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .task-title.done { text-decoration: line-through; color: var(--muted); }
+
+  .task-desc {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .task-time {
+    font-size: 11px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  /* Flashcard */
+  .flashcard-wrap {
+    perspective: 1000px;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+
+  .flashcard {
+    width: 100%;
+    min-height: 160px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    position: relative;
+  }
+
+  .flashcard.flipped { transform: rotateY(180deg); }
+
+  .card-front, .card-back {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px;
+    backface-visibility: hidden;
+    border-radius: 16px;
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    background: rgba(124,159,255,0.08);
+  }
+
+  .card-hint {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .card-phrase {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .card-translation {
+    font-size: 14px;
+    color: var(--soft);
+    direction: rtl;
+  }
+
+  .fc-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .fc-nav .btn { flex: 1; font-size: 12px; padding: 8px; }
+
+  .fc-counter {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* Scenario section */
+  .scenario-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+
+  .scenario-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .tag-conference { background: rgba(124,159,255,0.15); color: var(--accent); }
+  .tag-tutorial { background: rgba(240,192,96,0.15); color: var(--gold); }
+  .tag-social { background: rgba(78,203,141,0.15); color: var(--green); }
+  .tag-school { background: rgba(176,159,255,0.15); color: var(--purple); }
+
+  .scenario-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .scenario-desc {
+    font-size: 12px;
+    color: var(--soft);
+    margin-bottom: 14px;
+  }
+
+  .useful-phrases {
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .useful-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .useful-phrase {
+    font-size: 13px;
+    color: var(--text);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .useful-phrase:last-child { border-bottom: none; }
+
+  .phrase-bullet {
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  /* Listening section */
+  .listen-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+
+  .listen-source {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .source-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .source-info { flex: 1; }
+  .source-name { font-size: 13px; font-weight: 500; }
+  .source-detail { font-size: 11px; color: var(--muted); }
+
+  .listen-method {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .method-step {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--soft);
+  }
+
+  .method-step span {
+    color: var(--accent);
+    font-weight: 600;
+    margin-right: 4px;
+  }
+
+  /* Write section */
+  .write-prompt {
+    background: rgba(240,192,96,0.06);
+    border: 1px solid rgba(240,192,96,0.2);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .write-prompt-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .write-prompt-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 10px;
+  }
+
+  textarea:focus { border-color: var(--accent); }
+
+  textarea::placeholder { color: var(--muted); }
+
+  /* AI Response */
+  .ai-response {
+    background: rgba(124,159,255,0.06);
+    border: 1px solid rgba(124,159,255,0.2);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 10px;
+    display: none;
+  }
+
+  .ai-response.visible { display: block; }
+
+  .ai-response-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .ai-response-text {
+    font-size: 13px;
+    color: var(--soft);
+    line-height: 1.6;
+  }
+
+  .loading-dots {
+    display: inline-flex;
+    gap: 4px;
+  }
+
+  .loading-dots span {
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+  }
+
+  /* Sidebar bottom nav */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: rgba(13,15,26,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding: 8px 0;
+    z-index: 100;
+  }
+
+  .bnav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 9px;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .bnav-btn.active { color: var(--accent); }
+
+  .bnav-icon { font-size: 20px; line-height: 1; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+
+  /* Scrollable phrase list */
+  .phrase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .phrase-row {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .phrase-row-en {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .phrase-row-fa {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    direction: rtl;
+    flex-shrink: 0;
+    max-width: 140px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 16px 0 8px;
+  }
+
+  /* tip bubble */
+  .tip {
+    background: rgba(78,203,141,0.08);
+    border: 1px solid rgba(78,203,141,0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--soft);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .tip strong { color: var(--green); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">🔭</div>
+      <span class="logo-text">AstroSpeak</span>
+    </div>
+    <div class="streak-pill" id="streakPill">🔥 Day 1</div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-section">
+    <div class="progress-label">
+      <span>Conference Countdown</span>
+      <span id="daysLeft">56 days left</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 2%"></div>
+    </div>
+    <div class="week-badges">
+      <div class="week-badge active">Week 1</div>
+      <div class="week-badge">Week 2</div>
+      <div class="week-badge">Week 3</div>
+      <div class="week-badge">Week 4</div>
+      <div class="week-badge">Week 5</div>
+      <div class="week-badge">Week 6</div>
+      <div class="week-badge">Week 7</div>
+      <div class="week-badge">Week 8</div>
+    </div>
+  </div>
+
+  <!-- Top nav -->
+  <div class="nav">
+    <button class="nav-btn active" onclick="showTab('today')">Today</button>
+    <button class="nav-btn" onclick="showTab('phrases')">Phrases</button>
+    <button class="nav-btn" onclick="showTab('scenarios')">Scenarios</button>
+    <button class="nav-btn" onclick="showTab('listening')">Listening</button>
+    <button class="nav-btn" onclick="showTab('write')">Write & Fix</button>
+    <button class="nav-btn" onclick="showTab('flashcards')">Flashcards</button>
+  </div>
+
+  <!-- TODAY PAGE -->
+  <div class="page active" id="page-today">
+    <div class="today-hero">
+      <div class="today-phase">Phase 1 — Week 1</div>
+      <div class="today-title">Ear Training + Foundations</div>
+      <div class="today-sub">Focus: Listening naturally & upgrading everyday phrases</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" id="statPhrases">0</div>
+        <div class="stat-label">Phrases learned</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statDays">1</div>
+        <div class="stat-label">Day streak</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statTasks">0/4</div>
+        <div class="stat-label">Today done</div>
+      </div>
+    </div>
+
+    <div class="phrase-of-day">
+      <div class="phrase-label">⭐ Phrase of the Day</div>
+      <div class="phrase-text" id="podText">"I should point out that..."</div>
+      <div class="phrase-persian" id="podPersian">می‌خوام اشاره کنم که... (در توضیح تکنیکی)</div>
+      <div class="phrase-context" id="podContext">Use this in your tutorial when directing attention to a step</div>
+      <div class="phrase-actions">
+        <button class="btn btn-primary" onclick="nextPOD()">Next phrase →</button>
+        <button class="btn btn-outline" onclick="markLearned()">Got it ✓</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Today's 1-hour plan</div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-check"></div>
+        <div class="task-content">
+          <div class="task-title">Duolingo + Loora session</div>
+          <div class="task-desc">Write down 2 phrases that sound natural</div>
+        </div>
+        <div class="task-time">20 min</div>
+      </div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-check"></div>
+        <div class="task-content">
+          <div class="task-title">BBC 6 Minute English — listen twice</div>
+          <div class="task-desc">First: no subtitle. Second: with subtitle</div>
+        </div>
+        <div class="task-time">15 min</div>
+      </div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-check"></div>
+        <div class="task-content">
+          <div class="task-title">Shadowing — repeat 3 sentences aloud</div>
+          <div class="task-desc">Match the speaker's rhythm, not just words</div>
+        </div>
+        <div class="task-time">15 min</div>
+      </div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-check"></div>
+        <div class="task-content">
+          <div class="task-title">Write 3 sentences in "Write & Fix" tab</div>
+          <div class="task-desc">About your research or today's conference prep</div>
+        </div>
+        <div class="task-time">10 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHRASES PAGE -->
+  <div class="page" id="page-phrases">
+    <div class="tip"><strong>How to use:</strong> These are your upgrade kit — replace simple words with these. Don't memorise, just use them once today.</div>
+
+    <div class="section-title">🎤 In your tutorial / talk</div>
+    <div class="phrase-list">
+      <div class="phrase-row"><span class="phrase-row-en">"Let me walk you through this."</span><span class="phrase-row-fa">بذار توضیح بدم</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"I should point out that..."</span><span class="phrase-row-fa">باید اشاره کنم که...</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"What we're looking at here is..."</span><span class="phrase-row-fa">چیزی که اینجا می‌بینیم...</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"Bear with me for a moment."</span><span class="phrase-row-fa">یه لحظه صبر کنید</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"Does that make sense so far?"</span><span class="phrase-row-fa">تا اینجا واضحه؟</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"Let me demonstrate this step."</span><span class="phrase-row-fa">بذار این مرحله رو نشون بدم</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"The key thing to notice here is..."</span><span class="phrase-row-fa">نکته کلیدی اینه که...</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"Feel free to ask at any point."</span><span class="phrase-row-fa">هر جا سوال داشتید بپرسید</span></div>
+    </div>
+
+    <div class="section-title">🤝 Meeting international colleagues</div>
+    <div class="phrase-list">
+      <div class="phrase-row"><span class="phrase-row-en">"It's great to finally meet you in person."</span><span class="phrase-row-fa">خوشحالم رو در رو می‌بینمت</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"I've been looking forward to this."</span><span class="phrase-row-fa">منتظر این لحظه بودم</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"I'd love to hear more about your work."</span><span class="phrase-row-fa">دوست دارم بیشتر بشنوم</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"Could we perhaps connect after the session?"</span><span class="phrase-row-fa">می‌تونیم بعد از جلسه صحبت کنیم؟</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"That's a fascinating approach."</span><span class="phrase-row-fa">رویکرد جالبیه</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"I see your point — have you considered...?"</span><span class="phrase-row-fa">منظورت رو می‌فهمم، آیا فکر کردی...</span></div>
+    </div>
+
+    <div class="section-title">📧 Academic emails</div>
+    <div class="phrase-list">
+      <div class="phrase-row"><span class="phrase-row-en">"I was wondering if you could..."</span><span class="phrase-row-fa">می‌خواستم بپرسم آیا می‌تونید...</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"I would be grateful if..."</span><span class="phrase-row-fa">ممنون می‌شم اگر...</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"Please find my CV attached."</span><span class="phrase-row-fa">رزومه‌ام رو پیوست کردم</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"At your earliest convenience"</span><span class="phrase-row-fa">در اولین فرصت</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"I look forward to hearing from you."</span><span class="phrase-row-fa">منتظر پاسختون هستم</span></div>
+    </div>
+
+    <div class="section-title">🏫 Mahdyar's school</div>
+    <div class="phrase-list">
+      <div class="phrase-row"><span class="phrase-row-en">"I was wondering if we could schedule a brief meeting."</span><span class="phrase-row-fa">می‌خواستم یه جلسه کوتاه بذاریم</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"Please keep an eye on him as he settles in."</span><span class="phrase-row-fa">لطفاً مراقبش باشید اول سال</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"He's still finding his footing socially."</span><span class="phrase-row-fa">داره اجتماعی‌شدن رو یاد می‌گیره</span></div>
+      <div class="phrase-row"><span class="phrase-row-en">"I appreciate your support."</span><span class="phrase-row-fa">از حمایتتون ممنونم</span></div>
+    </div>
+  </div>
+
+  <!-- SCENARIOS PAGE -->
+  <div class="page" id="page-scenarios">
+    <div class="tip"><strong>Role-play tip:</strong> Read the situation, say your response aloud, then check the suggested phrases. No writing needed here — just speak.</div>
+
+    <div class="scenario-card">
+      <span class="scenario-tag tag-tutorial">Tutorial</span>
+      <div class="scenario-title">Someone's stuck on the installation step</div>
+      <div class="scenario-desc">A participant raises their hand — the software isn't installing. Others are watching. What do you say?</div>
+      <div class="useful-phrases">
+        <div class="useful-label">Useful phrases</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"No problem at all — let's take a look together."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"This sometimes happens on Windows — try running it as administrator."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"While we sort this out, everyone else can move on to step three."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"Could you share your screen with me?"</div>
+      </div>
+      <button class="btn btn-outline" style="width:100%; font-size:12px;" onclick="practiceScenario('tutorial_stuck')">Practice this scenario →</button>
+    </div>
+
+    <div class="scenario-card">
+      <span class="scenario-tag tag-conference">Conference</span>
+      <div class="scenario-title">Introducing yourself to a senior researcher</div>
+      <div class="scenario-desc">You're at the coffee break. A well-known astronomer is standing nearby. You make your move.</div>
+      <div class="useful-phrases">
+        <div class="useful-label">Useful phrases</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"Excuse me — I'm Mina Alizadeh, PhD candidate from Iran. I really enjoyed your talk."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"I work on long-period variable stars in M33 — there's actually some overlap with your work on..."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"I'd love to get your thoughts on this when you have a moment."</div>
+      </div>
+      <button class="btn btn-outline" style="width:100%; font-size:12px;" onclick="practiceScenario('intro_researcher')">Practice this scenario →</button>
+    </div>
+
+    <div class="scenario-card">
+      <span class="scenario-tag tag-conference">Your Talk</span>
+      <div class="scenario-title">Handling a tough question after your talk</div>
+      <div class="scenario-desc">Someone asks a question you don't know the exact answer to. The room is quiet.</div>
+      <div class="useful-phrases">
+        <div class="useful-label">Useful phrases</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"That's a really good question — I haven't fully explored that angle yet."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"My initial feeling is... but I'd want to look at the data more carefully."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"Could we perhaps discuss this further after the session?"</div>
+      </div>
+      <button class="btn btn-outline" style="width:100%; font-size:12px;" onclick="practiceScenario('tough_question')">Practice this scenario →</button>
+    </div>
+
+    <div class="scenario-card">
+      <span class="scenario-tag tag-school">School</span>
+      <div class="scenario-title">First meeting with Mahdyar's teacher</div>
+      <div class="scenario-desc">You're meeting his class teacher at registration. You want to make a good impression and share your concerns.</div>
+      <div class="useful-phrases">
+        <div class="useful-label">Useful phrases</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"Hello, I'm Mina — Mahdyar's mother. It's lovely to meet you."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"He's quite bright but still settling into English. I'd appreciate you keeping an eye on him socially."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"Please don't hesitate to reach out if anything comes up."</div>
+      </div>
+      <button class="btn btn-outline" style="width:100%; font-size:12px;" onclick="practiceScenario('school_meeting')">Practice this scenario →</button>
+    </div>
+
+    <div class="scenario-card">
+      <span class="scenario-tag tag-social">BAO Collaboration</span>
+      <div class="scenario-title">First video call with Dr. Yeghikyan's group</div>
+      <div class="scenario-desc">Opening a new international collaboration. You want to sound confident and clear about your role.</div>
+      <div class="useful-phrases">
+        <div class="useful-label">Useful phrases</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"Thank you for having me — I'm really excited about this collaboration."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"My contribution will be on the observational side — specifically the AGB stellar data from M33."</div>
+        <div class="useful-phrase"><span class="phrase-bullet">▸</span>"I see strong potential in linking our datasets — shall we map out the first steps?"</div>
+      </div>
+      <button class="btn btn-outline" style="width:100%; font-size:12px;" onclick="practiceScenario('bao_call')">Practice this scenario →</button>
+    </div>
+  </div>
+
+  <!-- LISTENING PAGE -->
+  <div class="page" id="page-listening">
+    <div class="tip"><strong>The 3-pass method:</strong> <strong>Pass 1</strong> — just listen, no subtitles. <strong>Pass 2</strong> — with English subtitles. <strong>Pass 3</strong> — shadow 2–3 sentences aloud.</div>
+
+    <div class="listen-card">
+      <div class="listen-source">
+        <div class="source-icon" style="background: rgba(240,80,80,0.15);">📻</div>
+        <div class="source-info">
+          <div class="source-name">BBC 6 Minute English</div>
+          <div class="source-detail">British accent · transcript available · 6 min · Week 1–3</div>
+        </div>
+      </div>
+      <div class="listen-method">
+        <div class="method-step"><span>1</span>Listen blind</div>
+        <div class="method-step"><span>2</span>With transcript</div>
+        <div class="method-step"><span>3</span>Shadow aloud</div>
+      </div>
+      <div style="font-size:12px; color: var(--muted); margin-bottom:10px;">Recommended today: <em>"The language of space exploration"</em></div>
+      <button class="btn btn-primary" style="width:100%; font-size:13px;" onclick="window.open('https://www.bbc.co.uk/learningenglish/english/features/6-minute-english','_blank')">Open BBC Learning English →</button>
+    </div>
+
+    <div class="listen-card">
+      <div class="listen-source">
+        <div class="source-icon" style="background: rgba(255,80,0,0.15);">▶</div>
+        <div class="source-info">
+          <div class="source-name">TED-Ed Science Talks</div>
+          <div class="source-detail">Clear American accent · subtitles · 5–10 min · Week 3–6</div>
+        </div>
+      </div>
+      <div class="listen-method">
+        <div class="method-step"><span>1</span>Watch blind</div>
+        <div class="method-step"><span>2</span>With subtitles</div>
+        <div class="method-step"><span>3</span>Write 3 phrases</div>
+      </div>
+      <div style="font-size:12px; color: var(--muted); margin-bottom:10px;">Great for: academic vocabulary + confident delivery</div>
+      <button class="btn btn-outline" style="width:100%; font-size:13px;" onclick="window.open('https://ed.ted.com/lessons?category=science-technology','_blank')">Open TED-Ed →</button>
+    </div>
+
+    <div class="listen-card">
+      <div class="listen-source">
+        <div class="source-icon" style="background: rgba(124,159,255,0.15);">🌍</div>
+        <div class="source-info">
+          <div class="source-name">UAE / International English</div>
+          <div class="source-detail">Mixed accents · prepares you for Armenia + UAE · Week 5–8</div>
+        </div>
+      </div>
+      <div class="listen-method">
+        <div class="method-step"><span>1</span>Listen for accents</div>
+        <div class="method-step"><span>2</span>Note differences</div>
+        <div class="method-step"><span>3</span>Shadow phrases</div>
+      </div>
+      <div style="font-size:12px; color: var(--muted); margin-bottom:10px;">Search YouTube: "expat life UAE vlog" or "academic conference talk astronomy"</div>
+      <button class="btn btn-outline" style="width:100%; font-size:13px;" onclick="window.open('https://www.youtube.com/results?search_query=astronomy+conference+talk+2024','_blank')">Find on YouTube →</button>
+    </div>
+  </div>
+
+  <!-- WRITE & FIX PAGE -->
+  <div class="page" id="page-write">
+    <div class="tip"><strong>How this works:</strong> Write a sentence or short paragraph in English. The AI will correct it, explain why, and give you a more polished version.</div>
+
+    <div class="write-prompt" id="writePromptBox">
+      <div class="write-prompt-label">Today's prompt</div>
+      <div class="write-prompt-text" id="writePromptText">Write 2–3 sentences introducing yourself as a tutorial helper at the BAO conference. Imagine you're speaking to participants who just sat down.</div>
+    </div>
+
+    <button class="btn btn-outline" style="font-size:12px; margin-bottom:12px;" onclick="newPrompt()">Different prompt ↻</button>
+
+    <textarea id="userWriting" placeholder="Write your sentences here in English..."></textarea>
+
+    <button class="btn btn-primary" style="width:100%;" onclick="getAIFeedback()">Get feedback & correction →</button>
+
+    <div class="ai-response" id="aiResponse">
+      <div class="ai-response-label">✦ Coach feedback</div>
+      <div class="ai-response-text" id="aiResponseText"></div>
+    </div>
+  </div>
+
+  <!-- FLASHCARDS PAGE -->
+  <div class="page" id="page-flashcards">
+    <div class="tip">Tap the card to flip it. Mark known cards so you see them less often.</div>
+
+    <div class="fc-counter" id="fcCounter">Card 1 of 12</div>
+
+    <div class="flashcard-wrap" onclick="flipCard()">
+      <div class="flashcard" id="flashcard">
+        <div class="card-front">
+          <div class="card-hint">See the phrase — think of Persian meaning</div>
+          <div class="card-phrase" id="fcFront">"I should point out that..."</div>
+        </div>
+        <div class="card-back">
+          <div class="card-hint">Persian meaning</div>
+          <div class="card-translation" id="fcBack">می‌خوام اشاره کنم که... — برای جلب توجه در توضیح تکنیکی</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc-nav">
+      <button class="btn btn-outline" onclick="prevCard()">← Prev</button>
+      <button class="btn btn-outline" onclick="markCardKnown()" style="color: var(--green); border-color: var(--green);">Known ✓</button>
+      <button class="btn btn-outline" onclick="nextCard()">Next →</button>
+    </div>
+  </div>
+
+</div><!-- end app -->
+
+<!-- Bottom nav -->
+<div class="bottom-nav">
+  <button class="bnav-btn active" onclick="switchPage('today', this)">
+    <span class="bnav-icon">🌙</span>Today
+  </button>
+  <button class="bnav-btn" onclick="switchPage('phrases', this)">
+    <span class="bnav-icon">💬</span>Phrases
+  </button>
+  <button class="bnav-btn" onclick="switchPage('scenarios', this)">
+    <span class="bnav-icon">🎭</span>Scenarios
+  </button>
+  <button class="bnav-btn" onclick="switchPage('listening', this)">
+    <span class="bnav-icon">🎧</span>Listen
+  </button>
+  <button class="bnav-btn" onclick="switchPage('write', this)">
+    <span class="bnav-icon">✍️</span>Write
+  </button>
+  <button class="bnav-btn" onclick="switchPage('flashcards', this)">
+    <span class="bnav-icon">🃏</span>Cards
+  </button>
+</div>
+
+<script>
+// ─── Data ───────────────────────────────────────────────
+const pods = [
+  { en: '"I should point out that..."', fa: 'می‌خوام اشاره کنم که... (در توضیح تکنیکی)', ctx: 'Use in your tutorial when directing attention to a step' },
+  { en: '"Let me walk you through this."', fa: 'بذار قدم به قدم توضیح بدم', ctx: 'Perfect opener for your installation tutorial' },
+  { en: '"Bear with me for a moment."', fa: 'یه لحظه صبر کنید — محترمانه', ctx: 'When you need a moment to think or load something' },
+  { en: '"That\'s a really good question."', fa: 'سوال خیلی خوبیه', ctx: 'Buys you thinking time in Q&A — sounds professional' },
+  { en: '"I\'d love to hear more about your work."', fa: 'دوست دارم بیشتر درباره کارت بشنوم', ctx: 'Networking gold — opens any conversation' },
+  { en: '"Does that make sense so far?"', fa: 'تا اینجا واضح بود؟', ctx: 'Check-in during tutorial — shows you care' },
+  { en: '"I was wondering if you could..."', fa: 'می‌خواستم بپرسم آیا می‌تونید...',  ctx: 'Polite request — emails, meetings, anywhere' },
+  { en: '"It\'s great to finally meet you in person."', fa: 'خوشحالم که بالاخره حضوری می‌بینمت', ctx: 'For colleagues you\'ve emailed but never met' },
+];
+
+const flashcards = [
+  { front: '"I should point out that..."', back: 'می‌خوام اشاره کنم که... — توضیح تکنیکی' },
+  { front: '"Let me walk you through this."', back: 'بذار قدم به قدم توضیح بدم — tutorial opener' },
+  { front: '"Bear with me for a moment."', back: 'یه لحظه صبر کنید — محترمانه' },
+  { front: '"Does that make sense so far?"', back: 'تا اینجا واضح بود؟ — بررسی درک مخاطب' },
+  { front: '"I\'d love to hear more about your work."', back: 'دوست دارم بیشتر بشنوم — networking' },
+  { front: '"I was wondering if you could..."', back: 'می‌خواستم بپرسم آیا می‌تونید... — درخواست مودبانه' },
+  { front: '"That\'s a fascinating approach."', back: 'رویکرد جالبیه — موافقت محترمانه' },
+  { front: '"I see your point, but..."', back: 'منظورت رو می‌فهمم، ولی... — مخالفت مودبانه' },
+  { front: '"At your earliest convenience"', back: 'در اولین فرصت — ایمیل رسمی' },
+  { front: '"Please keep an eye on him."', back: 'لطفاً مراقبش باشید — به معلم' },
+  { front: '"I look forward to hearing from you."', back: 'منتظر پاسختون هستم — پایان ایمیل' },
+  { front: '"Could we perhaps connect after the session?"', back: 'می‌تونیم بعد از جلسه صحبت کنیم؟' },
+];
+
+const writePrompts = [
+  'Write 2–3 sentences introducing yourself as a tutorial helper at the BAO conference. Imagine you\'re speaking to participants who just sat down.',
+  'Write an email opening to a potential postdoc supervisor at a UAE university. Mention your M33 research.',
+  'Write what you would say to Mahdyar\'s new teacher about his English level and social needs.',
+  'Describe your research in 3 sentences — as if explaining to a smart person who is NOT an astronomer.',
+  'Write a follow-up message after meeting Dr. Yeghikyan\'s group for the first time.',
+  'You\'re at the conference coffee break. Write 2 sentences to start a conversation with a researcher from a different country.',
+];
+
+// ─── State ───────────────────────────────────────────────
+let podIndex = 0;
+let fcIndex = 0;
+let fcFlipped = false;
+let tasksCompleted = 0;
+let phrasesLearned = 0;
+let dayStreak = parseInt(localStorage.getItem('astrospeak_streak') || '1');
+let promptIndex = 0;
+
+// ─── Init ────────────────────────────────────────────────
+function init() {
+  updateStreak();
+  updateCountdown();
+  renderPOD();
+  renderFlashcard();
+  updateStats();
+}
+
+function updateStreak() {
+  document.getElementById('streakPill').textContent = '🔥 Day ' + dayStreak;
+  document.getElementById('statDays').textContent = dayStreak;
+}
+
+function updateCountdown() {
+  const today = new Date();
+  const conf = new Date('2026-09-01');
+  const diff = Math.ceil((conf - today) / (1000 * 60 * 60 * 24));
+  const el = document.getElementById('daysLeft');
+  if (el) el.textContent = diff + ' days left';
+  const pct = Math.max(2, Math.round((1 - diff/80) * 100));
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function renderPOD() {
+  const p = pods[podIndex % pods.length];
+  document.getElementById('podText').textContent = p.en;
+  document.getElementById('podPersian').textContent = p.fa;
+  document.getElementById('podContext').textContent = p.ctx;
+}
+
+function nextPOD() {
+  podIndex = (podIndex + 1) % pods.length;
+  renderPOD();
+}
+
+function markLearned() {
+  phrasesLearned++;
+  updateStats();
+  nextPOD();
+}
+
+function renderFlashcard() {
+  const card = flashcards[fcIndex];
+  document.getElementById('fcFront').textContent = card.front;
+  document.getElementById('fcBack').textContent = card.back;
+  document.getElementById('fcCounter').textContent = 'Card ' + (fcIndex + 1) + ' of ' + flashcards.length;
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+  fcFlipped = false;
+}
+
+function flipCard() {
+  fcFlipped = !fcFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped', fcFlipped);
+}
+
+function nextCard() {
+  fcIndex = (fcIndex + 1) % flashcards.length;
+  renderFlashcard();
+}
+
+function prevCard() {
+  fcIndex = (fcIndex - 1 + flashcards.length) % flashcards.length;
+  renderFlashcard();
+}
+
+function markCardKnown() {
+  phrasesLearned++;
+  updateStats();
+  nextCard();
+}
+
+function updateStats() {
+  document.getElementById('statPhrases').textContent = phrasesLearned;
+  document.getElementById('statTasks').textContent = tasksCompleted + '/4';
+}
+
+// ─── Navigation ─────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+}
+
+function switchPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+}
+
+// ─── Tasks ───────────────────────────────────────────────
+function toggleTask(item) {
+  const check = item.querySelector('.task-check');
+  const title = item.querySelector('.task-title');
+  const isDone = check.classList.contains('done');
+  if (!isDone) {
+    check.classList.add('done');
+    check.innerHTML = '<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    title.classList.add('done');
+    tasksCompleted = Math.min(4, tasksCompleted + 1);
+  } else {
+    check.classList.remove('done');
+    check.innerHTML = '';
+    title.classList.remove('done');
+    tasksCompleted = Math.max(0, tasksCompleted - 1);
+  }
+  updateStats();
+}
+
+// ─── Prompts ─────────────────────────────────────────────
+function newPrompt() {
+  promptIndex = (promptIndex + 1) % writePrompts.length;
+  document.getElementById('writePromptText').textContent = writePrompts[promptIndex];
+  document.getElementById('userWriting').value = '';
+  document.getElementById('aiResponse').classList.remove('visible');
+}
+
+// ─── AI Feedback ─────────────────────────────────────────
+async function getAIFeedback() {
+  const text = document.getElementById('userWriting').value.trim();
+  if (!text) return;
+
+  const respDiv = document.getElementById('aiResponse');
+  const respText = document.getElementById('aiResponseText');
+  respDiv.classList.add('visible');
+  respText.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+
+  const systemPrompt = `You are a professional English coach helping an Iranian astronomer (PhD candidate, B1-B2 level) prepare for an international conference in Armenia. She needs to sound polished and academic.
+
+When she submits writing:
+1. First write: "✓ What works:" and mention 1-2 good things (be specific and encouraging)
+2. Then write: "↑ Upgraded version:" and give a better version of her text
+3. Then write: "💡 Key upgrade:" and explain the single most important change in 1-2 sentences
+4. Then write: "⭐ Phrase to steal:" and give her one natural phrase from your upgraded version to memorise
+
+Keep it concise, warm, and practical. She has 8 weeks to the conference. Focus on natural academic English that sounds confident, not textbook-stiff.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: `Please review and improve this text:\n\n"${text}"` }]
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Sorry, could not get feedback. Please try again.';
+    respText.innerHTML = reply.replace(/\n/g, '<br>');
+  } catch (e) {
+    respText.innerHTML = 'Connection issue — please check your internet and try again.';
+  }
+}
+
+// ─── Scenario practice placeholder ──────────────────────
+function practiceScenario(id) {
+  const page = document.getElementById('page-write');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  page.classList.add('active');
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn')[4].classList.add('active');
+
+  const prompts = {
+    tutorial_stuck: 'Write what you would say when a participant is stuck during your tutorial and others are watching. Be calm and professional.',
+    intro_researcher: 'Write your self-introduction to a senior researcher at the conference coffee break. Include your research in one sentence.',
+    tough_question: 'Someone asked a difficult question after your talk that you\'re not 100% sure about. Write your response.',
+    school_meeting: 'Write what you would say to Mahdyar\'s teacher at the first meeting of the school year.',
+    bao_call: 'Write your opening statement for the first video call with Dr. Yeghikyan\'s group at BAO Armenia.',
+  };
+
+  document.getElementById('writePromptText').textContent = prompts[id] || 'Write your response for this scenario.';
+  document.getElementById('userWriting').value = '';
+  document.getElementById('aiResponse').classList.remove('visible');
+}
+
+// ─── Start ───────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
