@@ -34,7 +34,6 @@
     min-height: 100vh;
   }
 
-  /* Stars background */
   body::before {
     content: '';
     position: fixed;
@@ -62,7 +61,6 @@
     padding: 0 0 80px;
   }
 
-  /* Header */
   .header {
     padding: 20px 20px 16px;
     display: flex;
@@ -71,11 +69,7 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .logo { display: flex; align-items: center; gap: 10px; }
 
   .logo-icon {
     width: 32px; height: 32px;
@@ -100,9 +94,9 @@
     border-radius: 20px;
     font-size: 12px;
     font-weight: 500;
+    white-space: nowrap;
   }
 
-  /* Progress bar */
   .progress-section {
     padding: 16px 20px;
     background: var(--deep);
@@ -131,6 +125,7 @@
     background: linear-gradient(90deg, var(--accent), var(--purple));
     border-radius: 2px;
     transition: width 0.5s ease;
+    width: 2%;
   }
 
   .week-badges {
@@ -160,7 +155,6 @@
     color: var(--green);
   }
 
-  /* Nav tabs */
   .nav {
     display: flex;
     background: var(--deep);
@@ -186,16 +180,11 @@
     font-family: 'Inter', sans-serif;
   }
 
-  .nav-btn.active {
-    background: rgba(124,159,255,0.15);
-    color: var(--accent);
-  }
+  .nav-btn.active { background: rgba(124,159,255,0.15); color: var(--accent); }
 
-  /* Pages */
   .page { display: none; padding: 20px; }
   .page.active { display: block; }
 
-  /* Cards */
   .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -212,7 +201,6 @@
     margin-bottom: 12px;
   }
 
-  /* Today section */
   .today-hero {
     background: linear-gradient(135deg, rgba(124,159,255,0.15), rgba(176,159,255,0.1));
     border: 1px solid rgba(124,159,255,0.25);
@@ -237,12 +225,8 @@
     margin-bottom: 6px;
   }
 
-  .today-sub {
-    font-size: 13px;
-    color: var(--soft);
-  }
+  .today-sub { font-size: 13px; color: var(--soft); }
 
-  /* Phrase card */
   .phrase-of-day {
     background: var(--card);
     border: 1px solid var(--border);
@@ -284,12 +268,8 @@
     margin-bottom: 14px;
   }
 
-  .phrase-actions {
-    display: flex;
-    gap: 8px;
-  }
+  .phrase-actions { display: flex; gap: 8px; }
 
-  /* Buttons */
   .btn {
     padding: 9px 16px;
     border-radius: 10px;
@@ -301,22 +281,11 @@
     font-family: 'Inter', sans-serif;
   }
 
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    color: #fff;
-    flex: 1;
-  }
-
-  .btn-outline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--soft);
-  }
-
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff; flex: 1; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--soft); }
   .btn:hover { opacity: 0.85; transform: translateY(-1px); }
   .btn:active { transform: translateY(0); }
 
-  /* Tasks */
   .task-item {
     display: flex;
     align-items: flex-start;
@@ -325,7 +294,6 @@
     border-bottom: 1px solid rgba(255,255,255,0.04);
     cursor: pointer;
   }
-
   .task-item:last-child { border-bottom: none; }
 
   .task-check {
@@ -337,41 +305,15 @@
     display: flex; align-items: center; justify-content: center;
     transition: all 0.2s;
   }
-
-  .task-check.done {
-    background: var(--green);
-    border-color: var(--green);
-  }
+  .task-check.done { background: var(--green); border-color: var(--green); }
 
   .task-content { flex: 1; }
-
-  .task-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
+  .task-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
   .task-title.done { text-decoration: line-through; color: var(--muted); }
+  .task-desc { font-size: 12px; color: var(--muted); }
+  .task-time { font-size: 11px; color: var(--accent); flex-shrink: 0; margin-top: 3px; }
 
-  .task-desc {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .task-time {
-    font-size: 11px;
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-top: 3px;
-  }
-
-  /* Flashcard */
-  .flashcard-wrap {
-    perspective: 1000px;
-    margin-bottom: 16px;
-    cursor: pointer;
-  }
+  .flashcard-wrap { perspective: 1000px; margin-bottom: 16px; cursor: pointer; }
 
   .flashcard {
     width: 100%;
@@ -385,7 +327,6 @@
     transform-style: preserve-3d;
     position: relative;
   }
-
   .flashcard.flipped { transform: rotateY(180deg); }
 
   .card-front, .card-back {
@@ -399,50 +340,16 @@
     backface-visibility: hidden;
     border-radius: 16px;
   }
+  .card-back { transform: rotateY(180deg); background: rgba(124,159,255,0.08); }
 
-  .card-back {
-    transform: rotateY(180deg);
-    background: rgba(124,159,255,0.08);
-  }
+  .card-hint { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
+  .card-phrase { font-size: 18px; font-weight: 500; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+  .card-translation { font-size: 14px; color: var(--soft); direction: rtl; }
 
-  .card-hint {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  .card-phrase {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.4;
-    margin-bottom: 8px;
-  }
-
-  .card-translation {
-    font-size: 14px;
-    color: var(--soft);
-    direction: rtl;
-  }
-
-  .fc-nav {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-
+  .fc-nav { display: flex; gap: 10px; margin-bottom: 16px; }
   .fc-nav .btn { flex: 1; font-size: 12px; padding: 8px; }
+  .fc-counter { text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 12px; }
 
-  .fc-counter {
-    text-align: center;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  /* Scenario section */
   .scenario-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -451,137 +358,34 @@
     margin-bottom: 12px;
   }
 
-  .scenario-tag {
-    display: inline-block;
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-weight: 500;
-  }
-
+  .scenario-tag { display: inline-block; font-size: 10px; padding: 3px 8px; border-radius: 8px; margin-bottom: 10px; font-weight: 500; }
   .tag-conference { background: rgba(124,159,255,0.15); color: var(--accent); }
   .tag-tutorial { background: rgba(240,192,96,0.15); color: var(--gold); }
   .tag-social { background: rgba(78,203,141,0.15); color: var(--green); }
   .tag-school { background: rgba(176,159,255,0.15); color: var(--purple); }
 
-  .scenario-title {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
+  .scenario-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .scenario-desc { font-size: 12px; color: var(--soft); margin-bottom: 14px; }
 
-  .scenario-desc {
-    font-size: 12px;
-    color: var(--soft);
-    margin-bottom: 14px;
-  }
-
-  .useful-phrases {
-    background: rgba(255,255,255,0.03);
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 12px;
-  }
-
-  .useful-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-
-  .useful-phrase {
-    font-size: 13px;
-    color: var(--text);
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-  }
-
+  .useful-phrases { background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+  .useful-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 8px; }
+  .useful-phrase { font-size: 13px; color: var(--text); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; gap: 8px; align-items: flex-start; }
   .useful-phrase:last-child { border-bottom: none; }
+  .phrase-bullet { color: var(--accent); flex-shrink: 0; font-size: 10px; margin-top: 4px; }
 
-  .phrase-bullet {
-    color: var(--accent);
-    flex-shrink: 0;
-    font-size: 10px;
-    margin-top: 4px;
-  }
-
-  /* Listening section */
-  .listen-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 12px;
-  }
-
-  .listen-source {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .source-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
+  .listen-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 12px; }
+  .listen-source { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .source-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
   .source-info { flex: 1; }
   .source-name { font-size: 13px; font-weight: 500; }
   .source-detail { font-size: 11px; color: var(--muted); }
+  .listen-method { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .method-step { font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--soft); }
+  .method-step span { color: var(--accent); font-weight: 600; margin-right: 4px; }
 
-  .listen-method {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-
-  .method-step {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    color: var(--soft);
-  }
-
-  .method-step span {
-    color: var(--accent);
-    font-weight: 600;
-    margin-right: 4px;
-  }
-
-  /* Write section */
-  .write-prompt {
-    background: rgba(240,192,96,0.06);
-    border: 1px solid rgba(240,192,96,0.2);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 12px;
-  }
-
-  .write-prompt-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--gold);
-    margin-bottom: 6px;
-  }
-
-  .write-prompt-text {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.5;
-  }
+  .write-prompt { background: rgba(240,192,96,0.06); border: 1px solid rgba(240,192,96,0.2); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+  .write-prompt-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gold); margin-bottom: 6px; }
+  .write-prompt-text { font-size: 14px; color: var(--text); line-height: 1.5; }
 
   textarea {
     width: 100%;
@@ -598,58 +402,20 @@
     transition: border-color 0.2s;
     margin-bottom: 10px;
   }
-
   textarea:focus { border-color: var(--accent); }
-
   textarea::placeholder { color: var(--muted); }
 
-  /* AI Response */
-  .ai-response {
-    background: rgba(124,159,255,0.06);
-    border: 1px solid rgba(124,159,255,0.2);
-    border-radius: 10px;
-    padding: 14px;
-    margin-top: 10px;
-    display: none;
-  }
-
+  .ai-response { background: rgba(124,159,255,0.06); border: 1px solid rgba(124,159,255,0.2); border-radius: 10px; padding: 14px; margin-top: 10px; display: none; }
   .ai-response.visible { display: block; }
+  .ai-response-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent); margin-bottom: 8px; }
+  .ai-response-text { font-size: 13px; color: var(--soft); line-height: 1.6; }
 
-  .ai-response-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-
-  .ai-response-text {
-    font-size: 13px;
-    color: var(--soft);
-    line-height: 1.6;
-  }
-
-  .loading-dots {
-    display: inline-flex;
-    gap: 4px;
-  }
-
-  .loading-dots span {
-    width: 5px; height: 5px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: bounce 1.2s infinite;
-  }
-
+  .loading-dots { display: inline-flex; gap: 4px; }
+  .loading-dots span { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; animation: bounce 1.2s infinite; }
   .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
 
-  @keyframes bounce {
-    0%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-6px); }
-  }
-
-  /* Sidebar bottom nav */
   .bottom-nav {
     position: fixed;
     bottom: 0; left: 50%;
@@ -681,171 +447,73 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-
   .bnav-btn.active { color: var(--accent); }
-
   .bnav-icon { font-size: 20px; line-height: 1; }
 
-  /* Stats row */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
-  }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+  .stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 12px; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; }
 
-  .stat-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 12px;
-    text-align: center;
-  }
+  .phrase-list { display: flex; flex-direction: column; gap: 8px; }
+  .phrase-row { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .phrase-row-en { font-size: 13px; font-weight: 500; color: var(--text); flex: 1; }
+  .phrase-row-fa { font-size: 12px; color: var(--muted); text-align: right; direction: rtl; flex-shrink: 0; max-width: 140px; }
 
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
+  .section-title { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.8px; margin: 16px 0 8px; }
 
-  .stat-label {
-    font-size: 10px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-  }
-
-  /* Scrollable phrase list */
-  .phrase-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .phrase-row {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .phrase-row-en {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    flex: 1;
-  }
-
-  .phrase-row-fa {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: right;
-    direction: rtl;
-    flex-shrink: 0;
-    max-width: 140px;
-  }
-
-  .section-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin: 16px 0 8px;
-  }
-
-  /* tip bubble */
-  .tip {
-    background: rgba(78,203,141,0.08);
-    border: 1px solid rgba(78,203,141,0.2);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 12px;
-    color: var(--soft);
-    margin-bottom: 14px;
-    line-height: 1.5;
-  }
-
+  .tip { background: rgba(78,203,141,0.08); border: 1px solid rgba(78,203,141,0.2); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--soft); margin-bottom: 14px; line-height: 1.5; }
   .tip strong { color: var(--green); }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- Header -->
   <div class="header">
     <div class="logo">
       <div class="logo-icon">🔭</div>
       <span class="logo-text">AstroSpeak</span>
     </div>
-    <div class="streak-pill" id="streakPill">🔥 Day 1</div>
+    <div class="streak-pill" id="streakPill">🌙 Day 1</div>
   </div>
 
-  <!-- Progress -->
   <div class="progress-section">
     <div class="progress-label">
-      <span>Conference Countdown</span>
-      <span id="daysLeft">56 days left</span>
+      <span>8-Week Program</span>
+      <span id="daysLeft">— days to conference</span>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width: 2%"></div>
-    </div>
-    <div class="week-badges">
-      <div class="week-badge active">Week 1</div>
-      <div class="week-badge">Week 2</div>
-      <div class="week-badge">Week 3</div>
-      <div class="week-badge">Week 4</div>
-      <div class="week-badge">Week 5</div>
-      <div class="week-badge">Week 6</div>
-      <div class="week-badge">Week 7</div>
-      <div class="week-badge">Week 8</div>
-    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="week-badges" id="weekBadges"></div>
   </div>
 
-  <!-- Top nav -->
   <div class="nav">
-    <button class="nav-btn active" onclick="showTab('today')">Today</button>
-    <button class="nav-btn" onclick="showTab('phrases')">Phrases</button>
-    <button class="nav-btn" onclick="showTab('scenarios')">Scenarios</button>
-    <button class="nav-btn" onclick="showTab('listening')">Listening</button>
-    <button class="nav-btn" onclick="showTab('write')">Write & Fix</button>
-    <button class="nav-btn" onclick="showTab('flashcards')">Flashcards</button>
+    <button class="nav-btn active" onclick="showTab('today', this)">Today</button>
+    <button class="nav-btn" onclick="showTab('phrases', this)">Phrases</button>
+    <button class="nav-btn" onclick="showTab('scenarios', this)">Scenarios</button>
+    <button class="nav-btn" onclick="showTab('listening', this)">Listening</button>
+    <button class="nav-btn" onclick="showTab('write', this)">Write & Fix</button>
+    <button class="nav-btn" onclick="showTab('flashcards', this)">Flashcards</button>
   </div>
 
-  <!-- TODAY PAGE -->
+  <!-- TODAY -->
   <div class="page active" id="page-today">
     <div class="today-hero">
-      <div class="today-phase">Phase 1 — Week 1</div>
-      <div class="today-title">Ear Training + Foundations</div>
-      <div class="today-sub">Focus: Listening naturally & upgrading everyday phrases</div>
+      <div class="today-phase" id="todayPhase">Week 1 of 8 · Day 1</div>
+      <div class="today-title" id="todayTitle">Ear Training & Confidence</div>
+      <div class="today-sub" id="todaySub">Focus: Listening naturally & upgrading everyday phrases</div>
     </div>
 
     <div class="stats-row">
-      <div class="stat-box">
-        <div class="stat-num" id="statPhrases">0</div>
-        <div class="stat-label">Phrases learned</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num" id="statDays">1</div>
-        <div class="stat-label">Day streak</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num" id="statTasks">0/4</div>
-        <div class="stat-label">Today done</div>
-      </div>
+      <div class="stat-box"><div class="stat-num" id="statPhrases">0</div><div class="stat-label">Phrases learned</div></div>
+      <div class="stat-box"><div class="stat-num" id="statDays">0</div><div class="stat-label">Day streak</div></div>
+      <div class="stat-box"><div class="stat-num" id="statTasks">0/4</div><div class="stat-label">Today done</div></div>
     </div>
 
     <div class="phrase-of-day">
       <div class="phrase-label">⭐ Phrase of the Day</div>
-      <div class="phrase-text" id="podText">"I should point out that..."</div>
-      <div class="phrase-persian" id="podPersian">می‌خوام اشاره کنم که... (در توضیح تکنیکی)</div>
-      <div class="phrase-context" id="podContext">Use this in your tutorial when directing attention to a step</div>
+      <div class="phrase-text" id="podText">—</div>
+      <div class="phrase-persian" id="podPersian">—</div>
+      <div class="phrase-context" id="podContext">—</div>
       <div class="phrase-actions">
         <button class="btn btn-primary" onclick="nextPOD()">Next phrase →</button>
         <button class="btn btn-outline" onclick="markLearned()">Got it ✓</button>
@@ -854,42 +522,11 @@
 
     <div class="card">
       <div class="card-title">Today's 1-hour plan</div>
-      <div class="task-item" onclick="toggleTask(this)">
-        <div class="task-check"></div>
-        <div class="task-content">
-          <div class="task-title">Duolingo + Loora session</div>
-          <div class="task-desc">Write down 2 phrases that sound natural</div>
-        </div>
-        <div class="task-time">20 min</div>
-      </div>
-      <div class="task-item" onclick="toggleTask(this)">
-        <div class="task-check"></div>
-        <div class="task-content">
-          <div class="task-title">BBC 6 Minute English — listen twice</div>
-          <div class="task-desc">First: no subtitle. Second: with subtitle</div>
-        </div>
-        <div class="task-time">15 min</div>
-      </div>
-      <div class="task-item" onclick="toggleTask(this)">
-        <div class="task-check"></div>
-        <div class="task-content">
-          <div class="task-title">Shadowing — repeat 3 sentences aloud</div>
-          <div class="task-desc">Match the speaker's rhythm, not just words</div>
-        </div>
-        <div class="task-time">15 min</div>
-      </div>
-      <div class="task-item" onclick="toggleTask(this)">
-        <div class="task-check"></div>
-        <div class="task-content">
-          <div class="task-title">Write 3 sentences in "Write & Fix" tab</div>
-          <div class="task-desc">About your research or today's conference prep</div>
-        </div>
-        <div class="task-time">10 min</div>
-      </div>
+      <div id="todayTasksList"></div>
     </div>
   </div>
 
-  <!-- PHRASES PAGE -->
+  <!-- PHRASES -->
   <div class="page" id="page-phrases">
     <div class="tip"><strong>How to use:</strong> These are your upgrade kit — replace simple words with these. Don't memorise, just use them once today.</div>
 
@@ -933,7 +570,7 @@
     </div>
   </div>
 
-  <!-- SCENARIOS PAGE -->
+  <!-- SCENARIOS -->
   <div class="page" id="page-scenarios">
     <div class="tip"><strong>Role-play tip:</strong> Read the situation, say your response aloud, then check the suggested phrases. No writing needed here — just speak.</div>
 
@@ -1004,7 +641,7 @@
     </div>
   </div>
 
-  <!-- LISTENING PAGE -->
+  <!-- LISTENING -->
   <div class="page" id="page-listening">
     <div class="tip"><strong>The 3-pass method:</strong> <strong>Pass 1</strong> — just listen, no subtitles. <strong>Pass 2</strong> — with English subtitles. <strong>Pass 3</strong> — shadow 2–3 sentences aloud.</div>
 
@@ -1013,7 +650,7 @@
         <div class="source-icon" style="background: rgba(240,80,80,0.15);">📻</div>
         <div class="source-info">
           <div class="source-name">BBC 6 Minute English</div>
-          <div class="source-detail">British accent · transcript available · 6 min · Week 1–3</div>
+          <div class="source-detail">British accent · transcript available · 6 min · Weeks 1–2</div>
         </div>
       </div>
       <div class="listen-method">
@@ -1021,7 +658,6 @@
         <div class="method-step"><span>2</span>With transcript</div>
         <div class="method-step"><span>3</span>Shadow aloud</div>
       </div>
-      <div style="font-size:12px; color: var(--muted); margin-bottom:10px;">Recommended today: <em>"The language of space exploration"</em></div>
       <button class="btn btn-primary" style="width:100%; font-size:13px;" onclick="window.open('https://www.bbc.co.uk/learningenglish/english/features/6-minute-english','_blank')">Open BBC Learning English →</button>
     </div>
 
@@ -1030,7 +666,7 @@
         <div class="source-icon" style="background: rgba(255,80,0,0.15);">▶</div>
         <div class="source-info">
           <div class="source-name">TED-Ed Science Talks</div>
-          <div class="source-detail">Clear American accent · subtitles · 5–10 min · Week 3–6</div>
+          <div class="source-detail">Clear American accent · subtitles · 5–10 min · Weeks 3–4</div>
         </div>
       </div>
       <div class="listen-method">
@@ -1038,7 +674,6 @@
         <div class="method-step"><span>2</span>With subtitles</div>
         <div class="method-step"><span>3</span>Write 3 phrases</div>
       </div>
-      <div style="font-size:12px; color: var(--muted); margin-bottom:10px;">Great for: academic vocabulary + confident delivery</div>
       <button class="btn btn-outline" style="width:100%; font-size:13px;" onclick="window.open('https://ed.ted.com/lessons?category=science-technology','_blank')">Open TED-Ed →</button>
     </div>
 
@@ -1046,27 +681,26 @@
       <div class="listen-source">
         <div class="source-icon" style="background: rgba(124,159,255,0.15);">🌍</div>
         <div class="source-info">
-          <div class="source-name">UAE / International English</div>
-          <div class="source-detail">Mixed accents · prepares you for Armenia + UAE · Week 5–8</div>
+          <div class="source-name">Conference & International English</div>
+          <div class="source-detail">Mixed accents · real talks · Weeks 5–8</div>
         </div>
       </div>
       <div class="listen-method">
         <div class="method-step"><span>1</span>Listen for accents</div>
-        <div class="method-step"><span>2</span>Note differences</div>
+        <div class="method-step"><span>2</span>Note structure</div>
         <div class="method-step"><span>3</span>Shadow phrases</div>
       </div>
-      <div style="font-size:12px; color: var(--muted); margin-bottom:10px;">Search YouTube: "expat life UAE vlog" or "academic conference talk astronomy"</div>
-      <button class="btn btn-outline" style="width:100%; font-size:13px;" onclick="window.open('https://www.youtube.com/results?search_query=astronomy+conference+talk+2024','_blank')">Find on YouTube →</button>
+      <button class="btn btn-outline" style="width:100%; font-size:13px;" onclick="window.open('https://www.youtube.com/results?search_query=astronomy+conference+talk','_blank')">Find on YouTube →</button>
     </div>
   </div>
 
-  <!-- WRITE & FIX PAGE -->
+  <!-- WRITE & FIX -->
   <div class="page" id="page-write">
     <div class="tip"><strong>How this works:</strong> Write a sentence or short paragraph in English. The AI will correct it, explain why, and give you a more polished version.</div>
 
     <div class="write-prompt" id="writePromptBox">
       <div class="write-prompt-label">Today's prompt</div>
-      <div class="write-prompt-text" id="writePromptText">Write 2–3 sentences introducing yourself as a tutorial helper at the BAO conference. Imagine you're speaking to participants who just sat down.</div>
+      <div class="write-prompt-text" id="writePromptText">Loading...</div>
     </div>
 
     <button class="btn btn-outline" style="font-size:12px; margin-bottom:12px;" onclick="newPrompt()">Different prompt ↻</button>
@@ -1081,9 +715,9 @@
     </div>
   </div>
 
-  <!-- FLASHCARDS PAGE -->
+  <!-- FLASHCARDS -->
   <div class="page" id="page-flashcards">
-    <div class="tip">Tap the card to flip it. Mark known cards so you see them less often.</div>
+    <div class="tip">Tap the card to flip it. Mark known cards so you build your phrase count.</div>
 
     <div class="fc-counter" id="fcCounter">Card 1 of 12</div>
 
@@ -1091,11 +725,11 @@
       <div class="flashcard" id="flashcard">
         <div class="card-front">
           <div class="card-hint">See the phrase — think of Persian meaning</div>
-          <div class="card-phrase" id="fcFront">"I should point out that..."</div>
+          <div class="card-phrase" id="fcFront">—</div>
         </div>
         <div class="card-back">
           <div class="card-hint">Persian meaning</div>
-          <div class="card-translation" id="fcBack">می‌خوام اشاره کنم که... — برای جلب توجه در توضیح تکنیکی</div>
+          <div class="card-translation" id="fcBack">—</div>
         </div>
       </div>
     </div>
@@ -1107,116 +741,324 @@
     </div>
   </div>
 
-</div><!-- end app -->
+</div>
 
-<!-- Bottom nav -->
 <div class="bottom-nav">
-  <button class="bnav-btn active" onclick="switchPage('today', this)">
-    <span class="bnav-icon">🌙</span>Today
-  </button>
-  <button class="bnav-btn" onclick="switchPage('phrases', this)">
-    <span class="bnav-icon">💬</span>Phrases
-  </button>
-  <button class="bnav-btn" onclick="switchPage('scenarios', this)">
-    <span class="bnav-icon">🎭</span>Scenarios
-  </button>
-  <button class="bnav-btn" onclick="switchPage('listening', this)">
-    <span class="bnav-icon">🎧</span>Listen
-  </button>
-  <button class="bnav-btn" onclick="switchPage('write', this)">
-    <span class="bnav-icon">✍️</span>Write
-  </button>
-  <button class="bnav-btn" onclick="switchPage('flashcards', this)">
-    <span class="bnav-icon">🃏</span>Cards
-  </button>
+  <button class="bnav-btn active" onclick="switchPage('today', this)"><span class="bnav-icon">🌙</span>Today</button>
+  <button class="bnav-btn" onclick="switchPage('phrases', this)"><span class="bnav-icon">💬</span>Phrases</button>
+  <button class="bnav-btn" onclick="switchPage('scenarios', this)"><span class="bnav-icon">🎭</span>Scenarios</button>
+  <button class="bnav-btn" onclick="switchPage('listening', this)"><span class="bnav-icon">🎧</span>Listen</button>
+  <button class="bnav-btn" onclick="switchPage('write', this)"><span class="bnav-icon">✍️</span>Write</button>
+  <button class="bnav-btn" onclick="switchPage('flashcards', this)"><span class="bnav-icon">🃏</span>Cards</button>
 </div>
 
 <script>
-// ─── Data ───────────────────────────────────────────────
-const pods = [
-  { en: '"I should point out that..."', fa: 'می‌خوام اشاره کنم که... (در توضیح تکنیکی)', ctx: 'Use in your tutorial when directing attention to a step' },
-  { en: '"Let me walk you through this."', fa: 'بذار قدم به قدم توضیح بدم', ctx: 'Perfect opener for your installation tutorial' },
-  { en: '"Bear with me for a moment."', fa: 'یه لحظه صبر کنید — محترمانه', ctx: 'When you need a moment to think or load something' },
-  { en: '"That\'s a really good question."', fa: 'سوال خیلی خوبیه', ctx: 'Buys you thinking time in Q&A — sounds professional' },
-  { en: '"I\'d love to hear more about your work."', fa: 'دوست دارم بیشتر درباره کارت بشنوم', ctx: 'Networking gold — opens any conversation' },
-  { en: '"Does that make sense so far?"', fa: 'تا اینجا واضح بود؟', ctx: 'Check-in during tutorial — shows you care' },
-  { en: '"I was wondering if you could..."', fa: 'می‌خواستم بپرسم آیا می‌تونید...',  ctx: 'Polite request — emails, meetings, anywhere' },
-  { en: '"It\'s great to finally meet you in person."', fa: 'خوشحالم که بالاخره حضوری می‌بینمت', ctx: 'For colleagues you\'ve emailed but never met' },
+const CHECK_SVG = `<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const WEEKS = [
+  {
+    title: `Ear Training & Confidence`,
+    sub: `Focus: Listening naturally & upgrading everyday phrases`,
+    tasks: [
+      { title: `Duolingo + Loora session`, desc: `Write down 2 phrases that sound natural`, time: `20 min` },
+      { title: `BBC 6 Minute English — listen twice`, desc: `First: no subtitles. Second: with subtitles`, time: `15 min` },
+      { title: `Shadowing — repeat 3 sentences aloud`, desc: `Match the speaker's rhythm, not just words`, time: `15 min` },
+      { title: `Write 3 sentences about your research`, desc: `Keep it simple — focus on sounding natural`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"I should point out that..."`, fa: `می‌خوام اشاره کنم که... (در توضیح تکنیکی)`, ctx: `Use in your tutorial when directing attention to a step` },
+      { en: `"Let me walk you through this."`, fa: `بذار قدم به قدم توضیح بدم`, ctx: `Perfect opener for your installation tutorial` },
+      { en: `"Bear with me for a moment."`, fa: `یه لحظه صبر کنید — محترمانه`, ctx: `When you need a moment to think or load something` },
+    ],
+    writePrompt: `Introduce yourself in 2–3 sentences as a tutorial helper at the BAO conference.`,
+  },
+  {
+    title: `Upgrading Everyday Sentences`,
+    sub: `Focus: Turning simple sentences into polished ones`,
+    tasks: [
+      { title: `Duolingo + Loora session`, desc: `Find one "flat" sentence and upgrade it`, time: `20 min` },
+      { title: `BBC 6 Minute English — new episode`, desc: `Listen blind, then with transcript`, time: `15 min` },
+      { title: `Shadowing — focus on stress & rhythm`, desc: `Exaggerate the ups and downs on purpose`, time: `15 min` },
+      { title: `Write & Fix: polish 3 simple sentences`, desc: `Take plain sentences and make them sound confident`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"Does that make sense so far?"`, fa: `تا اینجا واضح بود؟`, ctx: `Check-in during any explanation — shows you care` },
+      { en: `"I'd love to hear more about your work."`, fa: `دوست دارم بیشتر درباره کارت بشنوم`, ctx: `Networking gold — opens any conversation` },
+      { en: `"That's a fascinating approach."`, fa: `رویکرد جالبیه`, ctx: `Warm, professional way to respond to an idea` },
+    ],
+    writePrompt: `Describe your PhD research in 3 sentences — for someone who is NOT an astronomer.`,
+  },
+  {
+    title: `Technical Explaining`,
+    sub: `Focus: Clear, step-by-step instruction language`,
+    tasks: [
+      { title: `Duolingo + Loora session`, desc: `Practice instruction-style sentences`, time: `20 min` },
+      { title: `TED-Ed science video`, desc: `Watch blind, then with subtitles`, time: `15 min` },
+      { title: `Shadow tutorial-style phrases aloud`, desc: `Practice explaining a step out loud`, time: `15 min` },
+      { title: `Write: explain an installation step`, desc: `As if a participant is watching you`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"What we're looking at here is..."`, fa: `چیزی که اینجا می‌بینیم...`, ctx: `Directing attention during a demo` },
+      { en: `"Let me demonstrate this step."`, fa: `بذار این مرحله رو نشون بدم`, ctx: `Before showing something on screen` },
+      { en: `"The key thing to notice here is..."`, fa: `نکته کلیدی اینه که...`, ctx: `Highlighting the important part` },
+    ],
+    writePrompt: `Write step-by-step instructions for installing your tutorial software.`,
+  },
+  {
+    title: `Handling Questions Mid-Tutorial`,
+    sub: `Focus: Staying calm and clear when things go wrong`,
+    tasks: [
+      { title: `Duolingo + Loora session`, desc: `Practice polite, reassuring language`, time: `20 min` },
+      { title: `TED-Ed — watch how the speaker handles pauses`, desc: `Notice filler phrases used naturally`, time: `15 min` },
+      { title: `Practice the "stuck participant" scenario aloud`, desc: `Check the Scenarios tab`, time: `15 min` },
+      { title: `Write: respond to a participant stuck on a step`, desc: `Stay warm and professional`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"No problem at all — let's take a look together."`, fa: `اصلاً مشکلی نیست — بیا با هم نگاه کنیم`, ctx: `When someone is stuck` },
+      { en: `"Feel free to ask at any point."`, fa: `هر جا سوال داشتید بپرسید`, ctx: `Opens the floor without pressure` },
+      { en: `"Could you share your screen with me?"`, fa: `می‌تونید صفحه‌تون رو نشونم بدید؟`, ctx: `Practical troubleshooting phrase` },
+    ],
+    writePrompt: `A participant says the software won't install. Write exactly what you'd say.`,
+  },
+  {
+    title: `Conference Networking`,
+    sub: `Focus: Small talk & introducing yourself with confidence`,
+    tasks: [
+      { title: `Duolingo + Loora session`, desc: `Role-play meeting someone new`, time: `20 min` },
+      { title: `Listen to mixed international accents`, desc: `Conference-style English`, time: `15 min` },
+      { title: `Shadow networking phrases aloud`, desc: `Practice your self-introduction out loud`, time: `15 min` },
+      { title: `Write: introduce yourself to a senior researcher`, desc: `Check the Scenarios tab for ideas`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"It's great to finally meet you in person."`, fa: `خوشحالم که بالاخره حضوری می‌بینمت`, ctx: `For people you've only emailed before` },
+      { en: `"I've been looking forward to this."`, fa: `منتظر این لحظه بودم`, ctx: `Warm, confident opener` },
+      { en: `"Could we perhaps connect after the session?"`, fa: `می‌تونیم بعد از جلسه صحبت کنیم؟`, ctx: `Polite way to continue a conversation later` },
+    ],
+    writePrompt: `Write your 2-sentence self-introduction for the conference coffee break.`,
+  },
+  {
+    title: `Delivering Your Talk`,
+    sub: `Focus: Signposting language & sounding confident while presenting`,
+    tasks: [
+      { title: `Duolingo + Loora session`, desc: `Practice presentation-style phrases`, time: `20 min` },
+      { title: `Listen to a real conference talk clip`, desc: `Notice how the speaker signals structure`, time: `15 min` },
+      { title: `Record yourself saying your talk opening`, desc: `Play it back and listen critically`, time: `15 min` },
+      { title: `Write: your talk's opening 3 sentences`, desc: `Clear, confident, and well-paced`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"Today I'll be talking about..."`, fa: `امروز می‌خوام درباره... صحبت کنم`, ctx: `Standard, confident talk opener` },
+      { en: `"To put this in context..."`, fa: `برای اینکه زمینه رو روشن کنم...`, ctx: `Before giving background information` },
+      { en: `"I'll come back to that in a moment."`, fa: `به اون بعداً برمی‌گردم`, ctx: `Handles a side-question without losing your flow` },
+    ],
+    writePrompt: `Write the opening 3 sentences of your talk.`,
+  },
+  {
+    title: `Tough Questions & the BAO Call`,
+    sub: `Focus: Thinking on your feet & sounding sure of yourself`,
+    tasks: [
+      { title: `Duolingo + Loora session`, desc: `Practice hedging language ("I'd need to check...")`, time: `20 min` },
+      { title: `Listen to Q&A sessions after talks`, desc: `Notice how speakers buy thinking time`, time: `15 min` },
+      { title: `Practice the "tough question" scenario aloud`, desc: `Check the Scenarios tab`, time: `15 min` },
+      { title: `Write: your opening for the BAO video call`, desc: `Confident but warm`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"That's a really good question — I haven't fully explored that angle yet."`, fa: `سوال خیلی خوبیه — هنوز کامل بررسیش نکردم`, ctx: `Buys thinking time, sounds professional` },
+      { en: `"My initial feeling is... but I'd want to check the data."`, fa: `حس اولیه‌ام اینه... ولی باید داده رو چک کنم`, ctx: `Honest, confident partial answer` },
+      { en: `"Thank you for having me — I'm excited about this collaboration."`, fa: `ممنون که دعوتم کردید — از این همکاری هیجان‌زده‌ام`, ctx: `Opening line for the BAO call` },
+    ],
+    writePrompt: `Write your opening statement for the first video call with Dr. Yeghikyan's group.`,
+  },
+  {
+    title: `Final Polish & Mock Run`,
+    sub: `Focus: Reviewing everything and building real confidence`,
+    tasks: [
+      { title: `Duolingo + Loora — light review`, desc: `Revisit your favourite phrases from this program`, time: `20 min` },
+      { title: `Re-listen to a Week 1 audio clip`, desc: `Notice how much easier it feels now`, time: `15 min` },
+      { title: `Full mock run: tutorial opening + talk opening`, desc: `Record both back to back`, time: `15 min` },
+      { title: `Write: what's improved most in your English`, desc: `A short, honest reflection`, time: `10 min` },
+    ],
+    phrases: [
+      { en: `"I look forward to hearing from you."`, fa: `منتظر پاسختون هستم`, ctx: `Strong email closing` },
+      { en: `"I appreciate your support."`, fa: `از حمایتتون ممنونم`, ctx: `Warm, professional gratitude` },
+      { en: `"It's been a pleasure."`, fa: `باعث افتخار بود`, ctx: `Graceful closing for any conversation` },
+    ],
+    writePrompt: `Write a short reflection: what's improved most in your English this program?`,
+  },
 ];
 
 const flashcards = [
-  { front: '"I should point out that..."', back: 'می‌خوام اشاره کنم که... — توضیح تکنیکی' },
-  { front: '"Let me walk you through this."', back: 'بذار قدم به قدم توضیح بدم — tutorial opener' },
-  { front: '"Bear with me for a moment."', back: 'یه لحظه صبر کنید — محترمانه' },
-  { front: '"Does that make sense so far?"', back: 'تا اینجا واضح بود؟ — بررسی درک مخاطب' },
-  { front: '"I\'d love to hear more about your work."', back: 'دوست دارم بیشتر بشنوم — networking' },
-  { front: '"I was wondering if you could..."', back: 'می‌خواستم بپرسم آیا می‌تونید... — درخواست مودبانه' },
-  { front: '"That\'s a fascinating approach."', back: 'رویکرد جالبیه — موافقت محترمانه' },
-  { front: '"I see your point, but..."', back: 'منظورت رو می‌فهمم، ولی... — مخالفت مودبانه' },
-  { front: '"At your earliest convenience"', back: 'در اولین فرصت — ایمیل رسمی' },
-  { front: '"Please keep an eye on him."', back: 'لطفاً مراقبش باشید — به معلم' },
-  { front: '"I look forward to hearing from you."', back: 'منتظر پاسختون هستم — پایان ایمیل' },
-  { front: '"Could we perhaps connect after the session?"', back: 'می‌تونیم بعد از جلسه صحبت کنیم؟' },
+  { front: `"I should point out that..."`, back: `می‌خوام اشاره کنم که... — توضیح تکنیکی` },
+  { front: `"Let me walk you through this."`, back: `بذار قدم به قدم توضیح بدم — tutorial opener` },
+  { front: `"Bear with me for a moment."`, back: `یه لحظه صبر کنید — محترمانه` },
+  { front: `"Does that make sense so far?"`, back: `تا اینجا واضح بود؟ — بررسی درک مخاطب` },
+  { front: `"I'd love to hear more about your work."`, back: `دوست دارم بیشتر بشنوم — networking` },
+  { front: `"I was wondering if you could..."`, back: `می‌خواستم بپرسم آیا می‌تونید... — درخواست مودبانه` },
+  { front: `"That's a fascinating approach."`, back: `رویکرد جالبیه — موافقت محترمانه` },
+  { front: `"I see your point, but..."`, back: `منظورت رو می‌فهمم، ولی... — مخالفت مودبانه` },
+  { front: `"At your earliest convenience"`, back: `در اولین فرصت — ایمیل رسمی` },
+  { front: `"Please keep an eye on him."`, back: `لطفاً مراقبش باشید — به معلم` },
+  { front: `"I look forward to hearing from you."`, back: `منتظر پاسختون هستم — پایان ایمیل` },
+  { front: `"Could we perhaps connect after the session?"`, back: `می‌تونیم بعد از جلسه صحبت کنیم؟` },
 ];
 
-const writePrompts = [
-  'Write 2–3 sentences introducing yourself as a tutorial helper at the BAO conference. Imagine you\'re speaking to participants who just sat down.',
-  'Write an email opening to a potential postdoc supervisor at a UAE university. Mention your M33 research.',
-  'Write what you would say to Mahdyar\'s new teacher about his English level and social needs.',
-  'Describe your research in 3 sentences — as if explaining to a smart person who is NOT an astronomer.',
-  'Write a follow-up message after meeting Dr. Yeghikyan\'s group for the first time.',
-  'You\'re at the conference coffee break. Write 2 sentences to start a conversation with a researcher from a different country.',
+const bonusPrompts = [
+  `Write 2–3 sentences introducing yourself as a tutorial helper at the BAO conference.`,
+  `Write an email opening to a potential postdoc supervisor at a UAE university. Mention your M33 research.`,
+  `Write what you would say to Mahdyar's new teacher about his English level and social needs.`,
+  `Describe your research in 3 sentences — as if explaining to a smart person who is NOT an astronomer.`,
+  `Write a follow-up message after meeting Dr. Yeghikyan's group for the first time.`,
+  `You're at the conference coffee break. Write 2 sentences to start a conversation with a researcher from a different country.`,
 ];
 
-// ─── State ───────────────────────────────────────────────
-let podIndex = 0;
+const scenarioPrompts = {
+  tutorial_stuck: `Write what you would say when a participant is stuck during your tutorial and others are watching. Be calm and professional.`,
+  intro_researcher: `Write your self-introduction to a senior researcher at the conference coffee break. Include your research in one sentence.`,
+  tough_question: `Someone asked a difficult question after your talk that you're not 100% sure about. Write your response.`,
+  school_meeting: `Write what you would say to Mahdyar's teacher at the first meeting of the school year.`,
+  bao_call: `Write your opening statement for the first video call with Dr. Yeghikyan's group at BAO Armenia.`,
+};
+
+const STORAGE_KEY = 'astrospeak_v2';
+
+function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function todayStr(){ return ymd(new Date()); }
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.startDate) return parsed;
+    }
+  } catch(e) {}
+  const fresh = { startDate: todayStr(), lastActiveDate: null, streak: 0, dailyTasksDone: {}, phrasesLearned: [] };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh)); } catch(e) {}
+  return fresh;
+}
+function saveData(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch(e) {} }
+
+let data = loadData();
+let currentWeekIdx = 0;
+let podPoolIndex = 0;
 let fcIndex = 0;
 let fcFlipped = false;
-let tasksCompleted = 0;
-let phrasesLearned = 0;
-let dayStreak = parseInt(localStorage.getItem('astrospeak_streak') || '1');
 let promptIndex = 0;
 
-// ─── Init ────────────────────────────────────────────────
-function init() {
-  updateStreak();
-  updateCountdown();
-  renderPOD();
-  renderFlashcard();
-  updateStats();
+function getDayNumber() {
+  const start = new Date(data.startDate);
+  const today = new Date(todayStr());
+  const diff = Math.round((today - start) / 86400000) + 1;
+  return Math.max(1, diff);
 }
 
-function updateStreak() {
-  document.getElementById('streakPill').textContent = '🔥 Day ' + dayStreak;
-  document.getElementById('statDays').textContent = dayStreak;
-}
-
-function updateCountdown() {
-  const today = new Date();
-  const conf = new Date('2026-09-01');
-  const diff = Math.ceil((conf - today) / (1000 * 60 * 60 * 24));
-  const el = document.getElementById('daysLeft');
-  if (el) el.textContent = diff + ' days left';
-  const pct = Math.max(2, Math.round((1 - diff/80) * 100));
+function renderProgressBar(dayNum) {
+  const pct = Math.min(100, Math.round((dayNum/56)*100));
   document.getElementById('progressFill').style.width = pct + '%';
 }
 
+function renderWeekBadges(curIdx) {
+  const el = document.getElementById('weekBadges');
+  let html = '';
+  for (let i=0;i<8;i++){
+    let cls = 'week-badge';
+    if (i < curIdx) cls += ' done';
+    else if (i === curIdx) cls += ' active';
+    html += `<div class="${cls}">Week ${i+1}</div>`;
+  }
+  el.innerHTML = html;
+}
+
+function updateCountdown() {
+  const conf = new Date('2026-09-01');
+  const today = new Date();
+  const diff = Math.ceil((conf - today) / 86400000);
+  document.getElementById('daysLeft').textContent = Math.max(0,diff) + ' days to conference';
+}
+
 function renderPOD() {
-  const p = pods[podIndex % pods.length];
+  const wk = WEEKS[currentWeekIdx];
+  const p = wk.phrases[podPoolIndex % wk.phrases.length];
   document.getElementById('podText').textContent = p.en;
   document.getElementById('podPersian').textContent = p.fa;
   document.getElementById('podContext').textContent = p.ctx;
 }
-
 function nextPOD() {
-  podIndex = (podIndex + 1) % pods.length;
+  const wk = WEEKS[currentWeekIdx];
+  podPoolIndex = (podPoolIndex + 1) % wk.phrases.length;
   renderPOD();
 }
-
 function markLearned() {
-  phrasesLearned++;
-  updateStats();
+  const wk = WEEKS[currentWeekIdx];
+  const p = wk.phrases[podPoolIndex % wk.phrases.length];
+  if (!data.phrasesLearned.includes(p.en)) data.phrasesLearned.push(p.en);
+  saveData(data);
+  updateStats(currentWeekIdx);
   nextPOD();
+}
+
+function updateStats(weekIdx) {
+  document.getElementById('statPhrases').textContent = data.phrasesLearned.length;
+  document.getElementById('statDays').textContent = data.streak;
+  const doneToday = (data.dailyTasksDone[todayStr()]||[]).length;
+  document.getElementById('statTasks').textContent = doneToday + '/' + WEEKS[weekIdx].tasks.length;
+}
+
+function renderToday() {
+  const dayNum = getDayNumber();
+  currentWeekIdx = Math.min(8, Math.ceil(dayNum/7)) - 1;
+  const wk = WEEKS[currentWeekIdx];
+
+  document.getElementById('todayPhase').textContent = 'Week ' + (currentWeekIdx+1) + ' of 8 · Day ' + dayNum;
+  document.getElementById('todayTitle').textContent = wk.title;
+  document.getElementById('todaySub').textContent = wk.sub;
+
+  const today = todayStr();
+  const doneKeys = data.dailyTasksDone[today] || [];
+  let html = '';
+  wk.tasks.forEach((t, i) => {
+    const key = currentWeekIdx + '-' + i;
+    const isDone = doneKeys.includes(key);
+    html += `<div class="task-item" onclick="toggleTask(${currentWeekIdx}, ${i})">
+      <div class="task-check ${isDone?'done':''}">${isDone ? CHECK_SVG : ''}</div>
+      <div class="task-content">
+        <div class="task-title ${isDone?'done':''}">${t.title}</div>
+        <div class="task-desc">${t.desc}</div>
+      </div>
+      <div class="task-time">${t.time}</div>
+    </div>`;
+  });
+  document.getElementById('todayTasksList').innerHTML = html;
+
+  podPoolIndex = (dayNum-1) % wk.phrases.length;
+  renderPOD();
+  renderWeekBadges(currentWeekIdx);
+  renderProgressBar(dayNum);
+  updateStats(currentWeekIdx);
+
+  document.getElementById('streakPill').textContent = '🌙 Day ' + dayNum;
+}
+
+function toggleTask(weekIdx, taskIdx) {
+  const today = todayStr();
+  if (!data.dailyTasksDone[today]) data.dailyTasksDone[today] = [];
+  const key = weekIdx + '-' + taskIdx;
+  const arr = data.dailyTasksDone[today];
+  const pos = arr.indexOf(key);
+  if (pos === -1) arr.push(key); else arr.splice(pos, 1);
+  bumpStreak();
+  saveData(data);
+  renderToday();
+}
+
+function bumpStreak() {
+  const today = todayStr();
+  const doneToday = (data.dailyTasksDone[today]||[]).length > 0;
+  if (!doneToday) return;
+  if (data.lastActiveDate === today) return;
+  const yesterday = new Date(Date.now() - 86400000);
+  const yStr = ymd(yesterday);
+  data.streak = (data.lastActiveDate === yStr) ? (data.streak + 1) : 1;
+  data.lastActiveDate = today;
 }
 
 function renderFlashcard() {
@@ -1224,46 +1066,30 @@ function renderFlashcard() {
   document.getElementById('fcFront').textContent = card.front;
   document.getElementById('fcBack').textContent = card.back;
   document.getElementById('fcCounter').textContent = 'Card ' + (fcIndex + 1) + ' of ' + flashcards.length;
-  const fc = document.getElementById('flashcard');
-  fc.classList.remove('flipped');
+  document.getElementById('flashcard').classList.remove('flipped');
   fcFlipped = false;
 }
-
 function flipCard() {
   fcFlipped = !fcFlipped;
   document.getElementById('flashcard').classList.toggle('flipped', fcFlipped);
 }
-
-function nextCard() {
-  fcIndex = (fcIndex + 1) % flashcards.length;
-  renderFlashcard();
-}
-
-function prevCard() {
-  fcIndex = (fcIndex - 1 + flashcards.length) % flashcards.length;
-  renderFlashcard();
-}
-
+function nextCard() { fcIndex = (fcIndex + 1) % flashcards.length; renderFlashcard(); }
+function prevCard() { fcIndex = (fcIndex - 1 + flashcards.length) % flashcards.length; renderFlashcard(); }
 function markCardKnown() {
-  phrasesLearned++;
-  updateStats();
+  const card = flashcards[fcIndex];
+  if (!data.phrasesLearned.includes(card.front)) data.phrasesLearned.push(card.front);
+  saveData(data);
+  updateStats(currentWeekIdx);
   nextCard();
 }
 
-function updateStats() {
-  document.getElementById('statPhrases').textContent = phrasesLearned;
-  document.getElementById('statTasks').textContent = tasksCompleted + '/4';
-}
-
-// ─── Navigation ─────────────────────────────────────────
-function showTab(name) {
+function showTab(name, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  btn.classList.add('active');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
 }
-
 function switchPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -1272,38 +1098,16 @@ function switchPage(name, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 }
 
-// ─── Tasks ───────────────────────────────────────────────
-function toggleTask(item) {
-  const check = item.querySelector('.task-check');
-  const title = item.querySelector('.task-title');
-  const isDone = check.classList.contains('done');
-  if (!isDone) {
-    check.classList.add('done');
-    check.innerHTML = '<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    title.classList.add('done');
-    tasksCompleted = Math.min(4, tasksCompleted + 1);
-  } else {
-    check.classList.remove('done');
-    check.innerHTML = '';
-    title.classList.remove('done');
-    tasksCompleted = Math.max(0, tasksCompleted - 1);
-  }
-  updateStats();
-}
-
-// ─── Prompts ─────────────────────────────────────────────
 function newPrompt() {
-  promptIndex = (promptIndex + 1) % writePrompts.length;
-  document.getElementById('writePromptText').textContent = writePrompts[promptIndex];
+  promptIndex = (promptIndex + 1) % bonusPrompts.length;
+  document.getElementById('writePromptText').textContent = bonusPrompts[promptIndex];
   document.getElementById('userWriting').value = '';
   document.getElementById('aiResponse').classList.remove('visible');
 }
 
-// ─── AI Feedback ─────────────────────────────────────────
 async function getAIFeedback() {
   const text = document.getElementById('userWriting').value.trim();
   if (!text) return;
-
   const respDiv = document.getElementById('aiResponse');
   const respText = document.getElementById('aiResponseText');
   respDiv.classList.add('visible');
@@ -1317,7 +1121,7 @@ When she submits writing:
 3. Then write: "💡 Key upgrade:" and explain the single most important change in 1-2 sentences
 4. Then write: "⭐ Phrase to steal:" and give her one natural phrase from your upgraded version to memorise
 
-Keep it concise, warm, and practical. She has 8 weeks to the conference. Focus on natural academic English that sounds confident, not textbook-stiff.`;
+Keep it concise, warm, and practical. Focus on natural academic English that sounds confident, not textbook-stiff.`;
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -1330,37 +1134,33 @@ Keep it concise, warm, and practical. She has 8 weeks to the conference. Focus o
         messages: [{ role: 'user', content: `Please review and improve this text:\n\n"${text}"` }]
       })
     });
-
-    const data = await res.json();
-    const reply = data.content?.find(b => b.type === 'text')?.text || 'Sorry, could not get feedback. Please try again.';
+    const resData = await res.json();
+    const reply = resData.content?.find(b => b.type === 'text')?.text || 'Sorry, could not get feedback. Please try again.';
     respText.innerHTML = reply.replace(/\n/g, '<br>');
   } catch (e) {
     respText.innerHTML = 'Connection issue — please check your internet and try again.';
   }
 }
 
-// ─── Scenario practice placeholder ──────────────────────
 function practiceScenario(id) {
-  const page = document.getElementById('page-write');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  page.classList.add('active');
+  document.getElementById('page-write').classList.add('active');
   document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.bnav-btn')[4].classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn')[4].classList.add('active');
 
-  const prompts = {
-    tutorial_stuck: 'Write what you would say when a participant is stuck during your tutorial and others are watching. Be calm and professional.',
-    intro_researcher: 'Write your self-introduction to a senior researcher at the conference coffee break. Include your research in one sentence.',
-    tough_question: 'Someone asked a difficult question after your talk that you\'re not 100% sure about. Write your response.',
-    school_meeting: 'Write what you would say to Mahdyar\'s teacher at the first meeting of the school year.',
-    bao_call: 'Write your opening statement for the first video call with Dr. Yeghikyan\'s group at BAO Armenia.',
-  };
-
-  document.getElementById('writePromptText').textContent = prompts[id] || 'Write your response for this scenario.';
+  document.getElementById('writePromptText').textContent = scenarioPrompts[id] || 'Write your response for this scenario.';
   document.getElementById('userWriting').value = '';
   document.getElementById('aiResponse').classList.remove('visible');
 }
 
-// ─── Start ───────────────────────────────────────────────
+function init() {
+  updateCountdown();
+  renderToday();
+  renderFlashcard();
+  document.getElementById('writePromptText').textContent = WEEKS[currentWeekIdx].writePrompt;
+}
 init();
 </script>
 </body>
