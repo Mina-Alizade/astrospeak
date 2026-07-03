@@ -464,6 +464,11 @@
 
   .tip { background: rgba(78,203,141,0.08); border: 1px solid rgba(78,203,141,0.2); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--soft); margin-bottom: 14px; line-height: 1.5; }
   .tip strong { color: var(--green); }
+
+  .tip-warn { background: rgba(240,160,64,0.08); border: 1px solid rgba(240,160,64,0.25); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--soft); margin-bottom: 14px; line-height: 1.5; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .tip-warn strong { color: var(--amber); }
+  .tip-warn-close { background: none; border: none; color: var(--muted); font-size: 13px; line-height: 1; cursor: pointer; flex-shrink: 0; padding: 2px; }
+  .tip-warn-close:hover { color: var(--soft); }
 </style>
 </head>
 <body>
@@ -497,6 +502,10 @@
 
   <!-- TODAY -->
   <div class="page active" id="page-today">
+    <div class="tip-warn" id="storageWarning" style="display:none;">
+      <div><strong>یادداشت:</strong> <span id="storageWarningText"></span></div>
+      <button class="tip-warn-close" onclick="dismissStorageWarning()" aria-label="Dismiss">✕</button>
+    </div>
     <div class="today-hero">
       <div class="today-phase" id="todayPhase">Week 1 of 8 · Day 1</div>
       <div class="today-title" id="todayTitle">Ear Training & Confidence</div>
@@ -933,6 +942,10 @@ function loadData() {
   } catch(e) {}
   const fresh = { startDate: todayStr(), lastActiveDate: null, streak: 0, dailyTasksDone: {}, phrasesLearned: [] };
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh)); } catch(e) {}
+  // In-memory only flag (added after saving, so it never gets written to storage itself).
+  // Lets init() flag "no previous progress found" so the person can tell, from inside
+  // the app, whether their browser is actually failing to persist data between visits.
+  fresh._justCreated = true;
   return fresh;
 }
 function saveData(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch(e) {} }
@@ -1155,11 +1168,25 @@ function practiceScenario(id) {
   document.getElementById('aiResponse').classList.remove('visible');
 }
 
+function checkStorageHealth() {
+  if (!data._justCreated) return;
+  const el = document.getElementById('storageWarning');
+  const txt = document.getElementById('storageWarningText');
+  if (!el || !txt) return;
+  txt.textContent = 'اگه قبل‌تر هم از AstroSpeak استفاده کرده بودی ولی پیشرفتت این‌جا نیست، یعنی مرورگر گوشیت داده رو بین دفعات ذخیره نکرده — نه اپ. یه بار از همین صفحه Add to Home Screen بزن و همیشه از همون آیکون و همون مرورگر بازش کن.';
+  el.style.display = 'flex';
+}
+function dismissStorageWarning() {
+  const el = document.getElementById('storageWarning');
+  if (el) el.style.display = 'none';
+}
+
 function init() {
   updateCountdown();
   renderToday();
   renderFlashcard();
   document.getElementById('writePromptText').textContent = WEEKS[currentWeekIdx].writePrompt;
+  checkStorageHealth();
 }
 init();
 </script>
