@@ -708,7 +708,7 @@
 
   <!-- WRITE & FIX -->
   <div class="page" id="page-write">
-    <div class="tip"><strong>How this works:</strong> Write a sentence or short paragraph in English. The AI will correct it, explain why, and give you a more polished version.</div>
+    <div class="tip"><strong>How this works:</strong> Write a sentence or short paragraph in English. Tap the button to copy a ready-made prompt, then paste it into your Claude chat to get corrected, explained, and polished — same format as always.</div>
 
     <div class="write-prompt" id="writePromptBox">
       <div class="write-prompt-label">Today's prompt</div>
@@ -719,7 +719,7 @@
 
     <textarea id="userWriting" placeholder="Write your sentences here in English..."></textarea>
 
-    <button class="btn btn-primary" style="width:100%;" onclick="getAIFeedback()">Get feedback & correction →</button>
+    <button class="btn btn-primary" style="width:100%;" onclick="getAIFeedback()">Copy for Claude chat →</button>
 
     <div class="ai-response" id="aiResponse">
       <div class="ai-response-label">✦ Coach feedback</div>
@@ -1127,34 +1127,18 @@ async function getAIFeedback() {
   const respDiv = document.getElementById('aiResponse');
   const respText = document.getElementById('aiResponseText');
   respDiv.classList.add('visible');
-  respText.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
 
-  const systemPrompt = `You are a professional English coach helping an Iranian astronomer (PhD candidate, B1-B2 level) prepare for an international conference in Armenia. She needs to sound polished and academic.
-
-When she submits writing:
-1. First write: "✓ What works:" and mention 1-2 good things (be specific and encouraging)
-2. Then write: "↑ Upgraded version:" and give a better version of her text
-3. Then write: "💡 Key upgrade:" and explain the single most important change in 1-2 sentences
-4. Then write: "⭐ Phrase to steal:" and give her one natural phrase from your upgraded version to memorise
-
-Keep it concise, warm, and practical. Focus on natural academic English that sounds confident, not textbook-stiff.`;
+  // This page is hosted outside Claude.ai (on purpose, so localStorage works — see coach notes),
+  // which means there's no safe place to hold an API key for a live in-app AI call.
+  // Instead: copy a ready-to-paste prompt so the same feedback format is one paste away
+  // in the person's actual Claude chat with their coach.
+  const promptForChat = `لطفاً این جمله رو با فرمت همیشگی بررسی کن (چی خوبه / نسخه آپگرید‌شده / نکته کلیدی / عبارت برای یادگیری):\n\n"${text}"`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: `Please review and improve this text:\n\n"${text}"` }]
-      })
-    });
-    const resData = await res.json();
-    const reply = resData.content?.find(b => b.type === 'text')?.text || 'Sorry, could not get feedback. Please try again.';
-    respText.innerHTML = reply.replace(/\n/g, '<br>');
+    await navigator.clipboard.writeText(promptForChat);
+    respText.innerHTML = '✓ کپی شد — حالا برو تو چتِ Claude (همون کوچ زبانت) و پیستش کن تا فیدبک بگیری.';
   } catch (e) {
-    respText.innerHTML = 'Connection issue — please check your internet and try again.';
+    respText.innerHTML = 'کپیِ خودکار کار نکرد — این متن رو دستی کپی کن و تو چتِ Claude بفرست:<br><br>' + promptForChat.replace(/\n/g, '<br>');
   }
 }
 
